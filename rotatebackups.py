@@ -1,19 +1,15 @@
 #!/usr/bin/python
 
-import sys
-import string
-import shutil
+import datetime
+import errno
 import getopt
+import logging
 import os
 import os.path
-import syslog
-import errno
-import logging
-import tempfile
-import datetime
+import string
 import subprocess
-import json
-
+import sys
+import tempfile
 from operator import itemgetter
 
 """
@@ -31,6 +27,7 @@ Revision: 1.0
 Revision      | Author            | Comment
 -----------------------------------------------------------------------------
 20130501-1.0  Dennis E. Kubes     Initial creation of script.
+20160609-1.1    George Pan        Fix bug if rotate archive file
 -----------------------------------------------------------------------------
 """
 class RotateBackups:
@@ -94,9 +91,7 @@ class RotateBackups:
             final_backup_names.append(new_bpath)
 
           elif bnum == 0:
-
-            if os.path.isdir(old_bpath):
-              logging.debug(["cp", "-al", old_bpath, new_bpath])          
+              logging.debug(["cp", "-al", old_bpath, new_bpath])
               self.run_command(["cp", "-al", old_bpath, new_bpath])
               final_backup_names.append(new_bpath)
 
@@ -112,10 +107,6 @@ class RotateBackups:
               self.run_command(["mv", old_bpath, zbackup_path])
               final_backup_names.append(zbackup_path)
 
-            else:
-              logging.debug(["mv",  old_bpath, new_bpath])          
-              self.run_command(["mv", old_bpath, new_bpath])
-              final_backup_names.append(new_bpath)
 
     # return the final backup file or directory names, most recent to least
     final_backup_names.reverse()

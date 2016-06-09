@@ -97,6 +97,20 @@ Use the -h or the --help flag to get a listing of options.
        [-p | --password] the database password
        [-s | --host] the database server hostname
 
+Win Backup
+===========
+Windows backup are done through the winbackup.py script. Rotate backup local directory in archived zip file.
+
+7zip should be installed and include 7z.exe into PATH environment variable.
+
+Use the -h or the --help flag to get a listing of options.
+
+    mysqlbackup.py [-hkdbups]
+       [-h | --help] prints this help and usage message
+       [-k | --keep] number of days to keep backups before deleting
+       [-s | --src] directory locally to be backup
+       [-t | --store] directory locally to store the backups
+
 License and Bug Fixes
 ===========
 These works are public domain or licensed under the Apache Licene. You can do
